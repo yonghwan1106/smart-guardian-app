@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, Wifi, Users, ChevronRight } from "lucide-react";
-import { useStore } from "@/store/useStore";
-import BottomNav from "@/components/BottomNav";
+import { Shield, Map, Bell, User, Phone, Zap, Navigation, Heart } from "lucide-react";
 import Link from "next/link";
+import BottomNav from "@/components/BottomNav";
+import { useStore } from "@/store/useStore";
 import { cn } from "@/lib/utils";
 
 export default function Home() {
@@ -14,24 +14,32 @@ export default function Home() {
 
   useEffect(() => {
     setMounted(true);
-    // Simulate auto-login
-    setTimeout(() => login(), 1000);
+    setTimeout(() => login(), 800);
   }, [login]);
 
   if (!mounted) return null;
 
   return (
     <>
-      <main className="flex-1 p-6 overflow-y-auto relative bg-[radial-gradient(circle_at_50%_0%,_#1e293b_0%,_#0f172a_50%)]">
+      <main className="flex-1 p-6 pb-24 overflow-y-auto relative z-10">
         {/* Header */}
-        <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-2 text-[#00f2ff] font-bold text-lg">
-            <Shield className="w-6 h-6" />
-            <span>Smart Guardian</span>
+        <header className="flex justify-between items-center mb-8 pt-2">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00f2ff] to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.3)]">
+              <Shield className="w-5 h-5 text-slate-900" fill="currentColor" />
+            </div>
+            <span className="font-outfit font-bold text-xl tracking-wide text-white">Smart<span className="text-[#00f2ff]">Guardian</span></span>
           </div>
-          <div className="px-3 py-1 rounded-full bg-[#00f2ff]/10 border border-[#00f2ff]/30 text-[#00f2ff] text-xs font-semibold flex items-center gap-2">
-            <Wifi className="w-3 h-3" />
-            <span>Connected</span>
+          <div className="flex items-center gap-3">
+            <div className="px-3 py-1 rounded-full glass-panel flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+              <span className="text-xs font-medium text-slate-300">Connected</span>
+            </div>
+            <Link href="/profile">
+              <div className="w-10 h-10 rounded-full glass-panel flex items-center justify-center overflow-hidden border border-white/20">
+                <User size={20} className="text-slate-300" />
+              </div>
+            </Link>
           </div>
         </header>
 
@@ -39,94 +47,104 @@ export default function Home() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-10"
+          className="mb-8"
         >
-          <h1 className="text-3xl font-light text-white leading-tight">
-            안녕하세요,<br />
-            <span className="font-bold text-[#00f2ff]">{user.name}</span>님<br />
-            안전한 밤 되세요.
+          <h1 className="text-4xl font-light text-white leading-tight tracking-tight">
+            Hello, <br />
+            <span className="font-bold text-[#00f2ff] text-glow">{user.name || "Guest"}</span>
           </h1>
+          <p className="text-slate-400 mt-2 text-sm">Your safety is active and monitored.</p>
         </motion.div>
 
-        {/* SOS Button */}
-        <div className="flex justify-center mb-12 relative">
-          <div className="absolute inset-0 bg-[#ff2e63]/20 rounded-full blur-3xl animate-pulse" />
-          <Link href="/sos">
-            <motion.button
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-40 h-40 rounded-full bg-gradient-to-br from-[#ff2e63] to-[#c21d45] text-white text-3xl font-bold shadow-[0_10px_40px_rgba(255,46,99,0.4)] border-4 border-[#ff2e63]/50 z-10 relative flex items-center justify-center"
-            >
-              SOS
-            </motion.button>
-          </Link>
-        </div>
-
-        {/* Companion Card */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-          className="bg-slate-800/70 backdrop-blur-md border border-white/10 rounded-3xl p-5 mb-4"
-        >
-          <div className="flex justify-between items-center mb-2">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#00f2ff]">
-                <Users className="w-5 h-5" />
-              </div>
-              <span className="font-semibold text-white">가상 동행 서비스</span>
-            </div>
-            <button
-              onClick={toggleCompanion}
-              className={cn(
-                "w-12 h-7 rounded-full transition-colors duration-300 relative",
-                isCompanionActive ? "bg-[#00f2ff]" : "bg-slate-700"
-              )}
-            >
-              <div
-                className={cn(
-                  "w-5 h-5 rounded-full bg-white absolute top-1 transition-transform duration-300",
-                  isCompanionActive ? "left-6" : "left-1"
-                )}
-              />
-            </button>
-          </div>
-          <p className="text-slate-400 text-sm pl-[52px]">
-            가족과 관제센터가 귀갓길을 실시간으로 모니터링합니다.
-          </p>
-        </motion.div>
-
-        {/* Safe Route Card */}
-        <Link href="/map">
+        {/* Bento Grid */}
+        <div className="bento-grid">
+          {/* SOS Button - Large Item */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-slate-800/70 backdrop-blur-md border border-white/10 rounded-3xl p-5 active:scale-95 transition-transform"
+            className="bento-item-large glass-panel rounded-3xl p-6 relative overflow-hidden group cursor-pointer"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
-            <div className="flex justify-between items-center mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-[#00f2ff]">
-                  <Shield className="w-5 h-5" />
-                </div>
-                <span className="font-semibold text-white">안심 경로 찾기</span>
+            <Link href="/sos" className="absolute inset-0 z-20" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#ff2e63]/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="relative z-10 flex justify-between items-start">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-1">Emergency SOS</h3>
+                <p className="text-red-200 text-sm">Tap for immediate help</p>
               </div>
-              <ChevronRight className="text-slate-500" />
+              <div className="w-12 h-12 rounded-full bg-[#ff2e63] flex items-center justify-center shadow-[0_0_30px_rgba(255,46,99,0.5)] animate-pulse-glow">
+                <Phone className="text-white" size={24} fill="currentColor" />
+              </div>
             </div>
-            <div className="flex gap-3">
-              <div className="flex-1 bg-white/5 rounded-2xl p-3 text-center">
-                <div className="text-xs text-slate-400 mb-1">집까지</div>
-                <div className="text-lg font-bold text-[#00f2ff]">12분</div>
-              </div>
-              <div className="flex-1 bg-white/5 rounded-2xl p-3 text-center">
-                <div className="text-xs text-slate-400 mb-1">안전지수</div>
-                <div className="text-lg font-bold text-emerald-400">98%</div>
-              </div>
+            <div className="mt-8 flex items-center gap-2 text-[#ff2e63] font-medium text-sm">
+              <Zap size={14} fill="currentColor" />
+              <span>Instant Police Dispatch</span>
             </div>
           </motion.div>
-        </Link>
+
+          {/* Safe Route */}
+          <Link href="/map" className="block">
+            <motion.div
+              className="glass-panel glass-panel-hover rounded-3xl p-5 h-full flex flex-col justify-between"
+              whileHover={{ y: -5 }}
+            >
+              <div className="w-10 h-10 rounded-2xl bg-[#00f2ff]/20 flex items-center justify-center text-[#00f2ff] mb-3">
+                <Map size={20} />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-white leading-none mb-1">Safe Route</h3>
+                <p className="text-slate-400 text-xs">AI-optimized path</p>
+              </div>
+            </motion.div>
+          </Link>
+
+          {/* Virtual Companion */}
+          <motion.div
+            className={cn(
+              "glass-panel glass-panel-hover rounded-3xl p-5 h-full flex flex-col justify-between cursor-pointer transition-all duration-300",
+              isCompanionActive ? "border-[#00f2ff]/50 bg-[#00f2ff]/5" : ""
+            )}
+            onClick={toggleCompanion}
+            whileHover={{ y: -5 }}
+          >
+            <div className={cn(
+              "w-10 h-10 rounded-2xl flex items-center justify-center mb-3 transition-colors",
+              isCompanionActive ? "bg-[#00f2ff] text-slate-900 shadow-[0_0_20px_rgba(0,242,255,0.4)]" : "bg-slate-700/50 text-slate-400"
+            )}>
+              <Shield size={20} fill={isCompanionActive ? "currentColor" : "none"} />
+            </div>
+            <div>
+              <h3 className={cn("text-lg font-bold leading-none mb-1", isCompanionActive ? "text-[#00f2ff]" : "text-white")}>
+                Guardian
+              </h3>
+              <p className="text-slate-400 text-xs">{isCompanionActive ? "Active Monitoring" : "Tap to Activate"}</p>
+            </div>
+          </motion.div>
+
+          {/* Status Card - Large */}
+          <div className="bento-item-large glass-panel rounded-3xl p-5 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center relative">
+                <Heart className="text-pink-500" size={20} fill="currentColor" />
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-900" />
+              </div>
+              <div>
+                <div className="text-sm text-slate-400">Heart Rate</div>
+                <div className="text-xl font-bold text-white">72 <span className="text-sm font-normal text-slate-500">BPM</span></div>
+              </div>
+            </div>
+            <div className="h-8 w-px bg-white/10" />
+            <div className="flex items-center gap-4">
+              <div>
+                <div className="text-sm text-slate-400 text-right">Battery</div>
+                <div className="text-xl font-bold text-white text-right">94%</div>
+              </div>
+              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center">
+                <Zap className="text-yellow-400" size={20} fill="currentColor" />
+              </div>
+            </div>
+          </div>
+        </div>
+
       </main>
       <BottomNav />
     </>
