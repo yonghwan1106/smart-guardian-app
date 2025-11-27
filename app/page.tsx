@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, Map, Bell, User, Phone, Zap, Navigation, Heart } from "lucide-react";
+import { Shield, Map, User, Phone, Zap, Heart, MapPin, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import { useStore } from "@/store/useStore";
@@ -21,130 +21,131 @@ export default function Home() {
 
   return (
     <>
-      <main className="flex-1 p-6 pb-24 overflow-y-auto relative z-10">
-        {/* Header */}
-        <header className="flex justify-between items-center mb-8 pt-2">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#00f2ff] to-blue-500 flex items-center justify-center shadow-[0_0_20px_rgba(0,242,255,0.3)]">
-              <Shield className="w-5 h-5 text-slate-900" fill="currentColor" />
-            </div>
-            <span className="font-outfit font-bold text-xl tracking-wide text-white">Smart<span className="text-[#00f2ff]">Guardian</span></span>
-          </div>
+      <main className="flex-1 px-5 pt-8 pb-28 overflow-y-auto bg-[#F8FAFC]">
+        <header className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-3">
-            <div className="px-3 py-1 rounded-full glass-panel flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs font-medium text-slate-300">Connected</span>
+            <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#7C3AED] to-[#A78BFA] flex items-center justify-center shadow-lg shadow-purple-200">
+              <Shield className="w-5 h-5 text-white" fill="currentColor" />
             </div>
-            <Link href="/profile">
-              <div className="w-10 h-10 rounded-full glass-panel flex items-center justify-center overflow-hidden border border-white/20">
-                <User size={20} className="text-slate-300" />
-              </div>
-            </Link>
+            <span className="font-outfit font-bold text-lg text-[#1E293B]">Smart<span className="text-[#7C3AED]">Guardian</span></span>
           </div>
+          <Link href="/profile">
+            <div className="w-11 h-11 rounded-xl bg-white border border-[#E2E8F0] flex items-center justify-center shadow-sm">
+              <User size={20} className="text-[#64748B]" />
+            </div>
+          </Link>
         </header>
 
-        {/* Greeting */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
+          className="bg-white rounded-2xl p-6 mb-6 border border-[#E2E8F0] shadow-sm"
         >
-          <h1 className="text-4xl font-light text-white leading-tight tracking-tight">
-            Hello, <br />
-            <span className="font-bold text-[#00f2ff] text-glow">{user.name || "Guest"}</span>
-          </h1>
-          <p className="text-slate-400 mt-2 text-sm">Your safety is active and monitored.</p>
-        </motion.div>
-
-        {/* Bento Grid */}
-        <div className="bento-grid">
-          {/* SOS Button - Large Item */}
-          <motion.div
-            className="bento-item-large glass-panel rounded-3xl p-6 relative overflow-hidden group cursor-pointer"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Link href="/sos" className="absolute inset-0 z-20" />
-            <div className="absolute inset-0 bg-gradient-to-br from-[#ff2e63]/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="relative z-10 flex justify-between items-start">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-1">Emergency SOS</h3>
-                <p className="text-red-200 text-sm">Tap for immediate help</p>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-[#ff2e63] flex items-center justify-center shadow-[0_0_30px_rgba(255,46,99,0.5)] animate-pulse-glow">
-                <Phone className="text-white" size={24} fill="currentColor" />
-              </div>
-            </div>
-            <div className="mt-8 flex items-center gap-2 text-[#ff2e63] font-medium text-sm">
-              <Zap size={14} fill="currentColor" />
-              <span>Instant Police Dispatch</span>
-            </div>
-          </motion.div>
-
-          {/* Safe Route */}
-          <Link href="/map" className="block">
-            <motion.div
-              className="glass-panel glass-panel-hover rounded-3xl p-5 h-full flex flex-col justify-between"
-              whileHover={{ y: -5 }}
-            >
-              <div className="w-10 h-10 rounded-2xl bg-[#00f2ff]/20 flex items-center justify-center text-[#00f2ff] mb-3">
-                <Map size={20} />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-white leading-none mb-1">Safe Route</h3>
-                <p className="text-slate-400 text-xs">AI-optimized path</p>
-              </div>
-            </motion.div>
-          </Link>
-
-          {/* Virtual Companion */}
-          <motion.div
-            className={cn(
-              "glass-panel glass-panel-hover rounded-3xl p-5 h-full flex flex-col justify-between cursor-pointer transition-all duration-300",
-              isCompanionActive ? "border-[#00f2ff]/50 bg-[#00f2ff]/5" : ""
-            )}
-            onClick={toggleCompanion}
-            whileHover={{ y: -5 }}
-          >
-            <div className={cn(
-              "w-10 h-10 rounded-2xl flex items-center justify-center mb-3 transition-colors",
-              isCompanionActive ? "bg-[#00f2ff] text-slate-900 shadow-[0_0_20px_rgba(0,242,255,0.4)]" : "bg-slate-700/50 text-slate-400"
-            )}>
-              <Shield size={20} fill={isCompanionActive ? "currentColor" : "none"} />
-            </div>
+          <div className="flex items-center justify-between">
             <div>
-              <h3 className={cn("text-lg font-bold leading-none mb-1", isCompanionActive ? "text-[#00f2ff]" : "text-white")}>
-                Guardian
-              </h3>
-              <p className="text-slate-400 text-xs">{isCompanionActive ? "Active Monitoring" : "Tap to Activate"}</p>
-            </div>
-          </motion.div>
-
-          {/* Status Card - Large */}
-          <div className="bento-item-large glass-panel rounded-3xl p-5 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center relative">
-                <Heart className="text-pink-500" size={20} fill="currentColor" />
-                <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-900" />
-              </div>
-              <div>
-                <div className="text-sm text-slate-400">Heart Rate</div>
-                <div className="text-xl font-bold text-white">72 <span className="text-sm font-normal text-slate-500">BPM</span></div>
+              <p className="text-[#64748B] text-sm mb-1">안녕하세요</p>
+              <h1 className="text-2xl font-bold text-[#1E293B]">{user.name || "Guest"}님</h1>
+              <div className="flex items-center gap-2 mt-3">
+                <div className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                <span className="text-sm text-[#10B981] font-medium">안전 모니터링 중</span>
               </div>
             </div>
-            <div className="h-8 w-px bg-white/10" />
-            <div className="flex items-center gap-4">
-              <div>
-                <div className="text-sm text-slate-400 text-right">Battery</div>
-                <div className="text-xl font-bold text-white text-right">94%</div>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center">
-                <Zap className="text-yellow-400" size={20} fill="currentColor" />
-              </div>
+            <div className="w-16 h-16 rounded-2xl bg-[#EDE9FE] flex items-center justify-center">
+              <Shield className="w-8 h-8 text-[#7C3AED]" />
             </div>
           </div>
-        </div>
+        </motion.div>
 
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="mb-6">
+          <Link href="/sos">
+            <div className="bg-gradient-to-r from-[#EF4444] to-[#DC2626] rounded-2xl p-6 shadow-lg shadow-red-200 active:scale-[0.98] transition-transform">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-1">긴급 SOS</h3>
+                  <p className="text-red-100 text-sm">탭하여 즉시 도움 요청</p>
+                </div>
+                <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                  <Phone className="text-white w-6 h-6" fill="currentColor" />
+                </div>
+              </div>
+              <div className="mt-4 flex items-center gap-2 text-white/90 text-sm">
+                <Zap size={14} fill="currentColor" />
+                <span>112 즉시 연결 · 위치 자동 공유</span>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-6">
+          <h2 className="text-base font-bold text-[#1E293B] mb-4">빠른 기능</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <Link href="/map">
+              <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-sm active:scale-[0.98] transition-transform h-full">
+                <div className="w-12 h-12 rounded-xl bg-[#EDE9FE] flex items-center justify-center mb-4">
+                  <Map size={22} className="text-[#7C3AED]" />
+                </div>
+                <h3 className="text-base font-bold text-[#1E293B] mb-1">안심 경로</h3>
+                <p className="text-sm text-[#64748B]">CCTV 밀집 경로</p>
+              </div>
+            </Link>
+
+            <div
+              onClick={toggleCompanion}
+              className={cn(
+                "bg-white rounded-2xl p-5 border shadow-sm cursor-pointer active:scale-[0.98] transition-all h-full",
+                isCompanionActive ? "border-[#7C3AED] bg-[#FAF5FF]" : "border-[#E2E8F0]"
+              )}
+            >
+              <div className={cn(
+                "w-12 h-12 rounded-xl flex items-center justify-center mb-4",
+                isCompanionActive ? "bg-[#7C3AED] shadow-lg shadow-purple-200" : "bg-[#F1F5F9]"
+              )}>
+                <Shield size={22} className={isCompanionActive ? "text-white" : "text-[#64748B]"} fill={isCompanionActive ? "currentColor" : "none"} />
+              </div>
+              <h3 className={cn("text-base font-bold mb-1", isCompanionActive ? "text-[#7C3AED]" : "text-[#1E293B]")}>가상 동행</h3>
+              <p className="text-sm text-[#64748B]">{isCompanionActive ? "모니터링 중" : "탭하여 활성화"}</p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+          <h2 className="text-base font-bold text-[#1E293B] mb-4">내 상태</h2>
+          <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-[#FEE2E2] flex items-center justify-center">
+                  <Heart className="text-[#EF4444] w-5 h-5" fill="currentColor" />
+                </div>
+                <div>
+                  <p className="text-sm text-[#64748B] mb-0.5">심박수</p>
+                  <p className="text-xl font-bold text-[#1E293B]">72 <span className="text-sm font-normal text-[#94A3B8]">BPM</span></p>
+                </div>
+              </div>
+              <div className="w-px h-12 bg-[#E2E8F0]" />
+              <div className="flex items-center gap-4">
+                <div>
+                  <p className="text-sm text-[#64748B] mb-0.5 text-right">배터리</p>
+                  <p className="text-xl font-bold text-[#1E293B] text-right">94%</p>
+                </div>
+                <div className="w-12 h-12 rounded-xl bg-[#FEF3C7] flex items-center justify-center">
+                  <Zap className="text-[#F59E0B] w-5 h-5" fill="currentColor" />
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 pt-4 border-t border-[#F1F5F9] flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-[#DBEAFE] flex items-center justify-center">
+                  <MapPin className="text-[#3B82F6] w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-sm text-[#64748B]">현재 위치</p>
+                  <p className="text-sm font-medium text-[#1E293B]">{user.address || "위치 확인 중..."}</p>
+                </div>
+              </div>
+              <ChevronRight size={20} className="text-[#94A3B8]" />
+            </div>
+          </div>
+        </motion.div>
       </main>
       <BottomNav />
     </>
