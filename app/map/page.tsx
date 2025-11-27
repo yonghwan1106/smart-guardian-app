@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Clock, AlertTriangle, Navigation } from "lucide-react";
+import { motion } from "framer-motion";
+import { Shield, Clock, Navigation, Box } from "lucide-react";
 import MapComponent from "@/components/MapComponent";
 import BottomNav from "@/components/BottomNav";
 import { cn } from "@/lib/utils";
@@ -10,18 +10,33 @@ import { cn } from "@/lib/utils";
 export default function MapPage() {
     const [selectedRoute, setSelectedRoute] = useState<"safe" | "fast">("safe");
     const [isNavigating, setIsNavigating] = useState(false);
+    const [is3DMode, setIs3DMode] = useState(false);
 
     return (
         <>
-            <div className="flex-1 relative flex flex-col">
+            <div className="flex-1 relative flex flex-col overflow-hidden bg-slate-900">
                 {/* Map Container */}
                 <div className="flex-1 relative z-0">
-                    <MapComponent selectedRoute={selectedRoute} onSelectRoute={setSelectedRoute} />
+                    <MapComponent selectedRoute={selectedRoute} onSelectRoute={setSelectedRoute} is3DMode={is3DMode} />
                 </div>
 
                 {/* Overlay UI */}
-                <div className="absolute top-0 left-0 w-full p-4 z-10 bg-gradient-to-b from-slate-900/80 to-transparent">
-                    <h2 className="text-lg font-bold text-white drop-shadow-md">안심 귀가 경로</h2>
+                <div className="absolute top-0 left-0 w-full p-4 z-10 bg-gradient-to-b from-slate-900/80 to-transparent flex justify-between items-start">
+                    <h2 className="text-lg font-bold text-white drop-shadow-md pt-2">안심 귀가 경로</h2>
+
+                    {/* 3D Toggle Button */}
+                    <button
+                        onClick={() => setIs3DMode(!is3DMode)}
+                        className={cn(
+                            "p-3 rounded-full backdrop-blur-md border transition-all duration-300 shadow-lg",
+                            is3DMode
+                                ? "bg-[#00f2ff]/20 border-[#00f2ff] text-[#00f2ff]"
+                                : "bg-slate-800/80 border-white/10 text-slate-400"
+                        )}
+                    >
+                        <Box size={24} strokeWidth={is3DMode ? 2.5 : 2} />
+                        <span className="sr-only">3D Mode</span>
+                    </button>
                 </div>
 
                 {/* Bottom Sheet */}

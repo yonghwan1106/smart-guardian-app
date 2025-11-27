@@ -2,21 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { X, PhoneCall, MapPin } from "lucide-react";
+import { PhoneCall, MapPin } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function SOSPage() {
     const [count, setCount] = useState(3);
     const [sent, setSent] = useState(false);
-    const router = useRouter();
 
     useEffect(() => {
         if (count > 0) {
             const timer = setTimeout(() => setCount(count - 1), 1000);
+            // Haptic Feedback: Short buzz every second
+            if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate(200);
             return () => clearTimeout(timer);
         } else {
             setSent(true);
+            // Haptic Feedback: Long buzz on success
+            if (typeof navigator !== 'undefined' && navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 500]);
         }
     }, [count]);
 
@@ -24,8 +26,8 @@ export default function SOSPage() {
         <main className="flex-1 flex flex-col items-center justify-center bg-[#2a0a0a] relative overflow-hidden">
             {/* Background Pulse */}
             <motion.div
-                animate={{ opacity: [0.2, 0.6, 0.2] }}
-                transition={{ duration: 0.5, repeat: Infinity }}
+                animate={{ opacity: [0.2, 0.6, 0.2], scale: [1, 1.1, 1] }}
+                transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute inset-0 bg-red-600 z-0"
             />
 

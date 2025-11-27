@@ -53,7 +53,9 @@ export default function Home() {
           <div className="absolute inset-0 bg-[#ff2e63]/20 rounded-full blur-3xl animate-pulse" />
           <Link href="/sos">
             <motion.button
-              whileHover={{ scale: 1.05 }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               className="w-40 h-40 rounded-full bg-gradient-to-br from-[#ff2e63] to-[#c21d45] text-white text-3xl font-bold shadow-[0_10px_40px_rgba(255,46,99,0.4)] border-4 border-[#ff2e63]/50 z-10 relative flex items-center justify-center"
             >
